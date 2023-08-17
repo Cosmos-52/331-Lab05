@@ -16,7 +16,7 @@ StuedntService.getEvent().then((response) => {
 </script>
 
 <style scoped>
-.events {
+.events{
   display: flex;
   flex-direction: column;
   align-items: center;

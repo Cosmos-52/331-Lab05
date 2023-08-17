@@ -20,7 +20,7 @@ const router = createRouter({
       path: '/',
       name: 'EventList',
       component: EventListView,
-      props: (route) => ({ page: parseInt((route.query?.page as string) || '1') })
+      props: (route) => ({page: parseInt(route.query?.page as string || '1') })
     },
     {
       path: '/about',
@@ -49,17 +49,18 @@ const router = createRouter({
         const id: number = parseInt(to.params.id as string)
         const eventStore = useEventStore()
         return EventService.getEventById(id)
-          .then((response) => {
-            // need to set up the data for the component
-            eventStore.setEvent(response.data)
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 404) {
-              return {
-                name: '404-resource',
-                params: { resource: 'event' }
-              }
-            } else {
+        .then((response) => {
+          // need to set up the data for the component
+          eventStore.setEvent(response.data)
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            return {
+              name: '404-resource',
+              params: { resource: 'event' }
+            }
+          }
+            else {
               return { name: 'network-error' }
             }
           })
@@ -108,7 +109,8 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
-    } else {
+    }
+    else {
       return { top: 0 }
     }
   }

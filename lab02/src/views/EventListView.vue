@@ -25,26 +25,22 @@ const props = defineProps({
 
 const router = useRouter()
 
-EventService.getEvent(3, props.page)
-  .then((response: AxiosResponse<EventItem[]>) => {
-    events.value = response.data
-    totalEvent.value = response.headers['x-total-count']
-  })
-  .catch(() => {
-    router.push({ name: 'NetworkError' })
-  })
+EventService.getEvent(3, props.page).then((response: AxiosResponse<EventItem[]>) => {
+  events.value = response.data
+  totalEvent.value = response.headers['x-total-count']
+}).catch(() => {
+  router.push({ name: 'NetworkError' })
+})
 
 onBeforeRouteUpdate((to, from, next) => {
   const toPage = Number(to.query.page)
-  EventService.getEvent(3, toPage)
-    .then((response: AxiosResponse<EventItem[]>) => {
-      events.value = response.data
-      totalEvent.value = response.headers['x-total-count']
-      next()
-    })
-    .catch(() => {
-      next({ name: 'NetworkError' })
-    })
+  EventService.getEvent(3, toPage).then((response: AxiosResponse<EventItem[]>) => {
+    events.value = response.data
+    totalEvent.value = response.headers['x-total-count']
+    next()
+  }).catch(() => {
+    next({ name: 'NetworkError' })
+  })
 })
 
 const hasNextPage = computed(() => {
@@ -57,7 +53,7 @@ const hasNextPage = computed(() => {
 <template>
   <main class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
-    <div class="pagination">
+    <div class="bg-emerald-400 w-24 text-center rounded-md">
       <RouterLink
         :to="{ name: 'EventList', query: { page: page - 1 } }"
         rel="prev"
@@ -79,4 +75,5 @@ const hasNextPage = computed(() => {
 </template>
 
 <style scoped>
+
 </style>

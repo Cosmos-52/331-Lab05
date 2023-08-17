@@ -1,5 +1,5 @@
+//import './assets/main.css'
 import './assets/style.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -8,7 +8,7 @@ import router from './router'
 import 'nprogress/nprogress.css'
 const app = createApp(App)
 
-const x = 'helxysx'
+const x = "helxysx"
 console.log(x)
 
 app.use(createPinia())
